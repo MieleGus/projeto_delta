@@ -52,4 +52,5 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'api';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['alunos'] = 'api/index';
+// $route['alunos'] = 'api/alunos_get';
+// $route['aluno/(:num)'] = 'aluno/aluno_get/$1';

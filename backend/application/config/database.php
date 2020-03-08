@@ -75,10 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'teste_delta',
+	'hostname' => 'projeto-delta.cchpro558gze.sa-east-1.rds.amazonaws.com',
+	'username' => 'admin',
+	'password' => 'password',
+	// 'port' => 3306,
+	'database' => 'projeto_delta',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

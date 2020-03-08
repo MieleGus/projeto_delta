@@ -10,18 +10,21 @@ require APPPATH . 'libraries/Format.php';
 defined('BASEPATH') OR exit('No direct script acess allowed');
 
 
-
 class Api extends RestController{
     
        
-    public function __construct(){
-        parent::_construct();
-        $this->load->model('api_model');
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('ApiModel');
     }
 
-    function index_get(){ //alunos_get (lista toods alunos)
-        // $this->load->model('ApiModel');
-        $alunos = $this->ApiModel->getalunos();
+    // public function dialogs_get(){
+    //     echo "Test"; 
+    // }
+
+    function alunos_get(){ //alunos_get (lista toods alunos)
+        $this->load->model('ApiModel');
+        $alunos = $this->ApiModel->get_alunos();
         // var_dump($alunos);
         if ($alunos) {
             $this->response($alunos, 200);
@@ -30,12 +33,13 @@ class Api extends RestController{
         }
    }
 
-    function aluno_get(){ // lista aluno por id
+    public function aluno_get(){ // lista aluno por id
+        $this->load->model('ApiModel');
         if (!$this->get('id')) {
             $this->response(NULL, 400);
         }
 
-        $aluno = $this->ApiModel->getAluno($this->get('id'));
+        $aluno = $this->ApiModel->get_aluno($this->get('id'));
 
         if ($aluno) {
             $this->response($aluno, 200); // 200 being the HTTP response code
@@ -45,11 +49,8 @@ class Api extends RestController{
 
     }
 
-   
-    
-
      function index_post() {
-        
+        $this->load->model('ApiModel');
         $result = $this->ApiModel->update( $this->post('id'), array(
             'nome' => $this->post('name'),
             'endereco' => $this->post('email'),
