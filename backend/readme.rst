@@ -1,3 +1,11 @@
+Projeto deve ser instalado em C:\xampp\htdocs\projeto_delta\backend para que as rotas funcionem.
+ex:
+get  http://localhost/projeto_delta/backend/api/alunos/
+get por id 2  http://localhost/projeto_delta/backend/api/alunos/2
+post  http://localhost/projeto_delta/backend/api/alunos/
+put  http://localhost/projeto_delta/backend/api/alunos/2
+delete http://localhost/projeto_delta/backend/api/alunos/2
+
 ###################
 What is CodeIgniter
 ###################
