@@ -1,5 +1,6 @@
-Projeto deve ser instalado em C:\xampp\htdocs\projeto_delta\backend para que as rotas funcionem.
+Projeto deve ser instalado em C:/xampp/htdocs/projeto_delta/backend para que as rotas funcionem
 ex:
+
 get  http://localhost/projeto_delta/backend/api/alunos/
 get por id 2  http://localhost/projeto_delta/backend/api/alunos/2
 post  http://localhost/projeto_delta/backend/api/alunos/
