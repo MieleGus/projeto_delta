@@ -1,78 +1,65 @@
 <?php
-// use chriskacerguis\RestServer\RestController;
-use chriskacerguis\RestServer\RestController;
-use Restserver\Libraries\REST_Controller;
-require (APPPATH . 'libraries/RestController.php');
-require APPPATH . 'libraries/Format.php';
-
-
-
 defined('BASEPATH') OR exit('No direct script acess allowed');
-
-
-class Api extends RestController{
+require(APPPATH.'/libraries/REST_Controller.php');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: Content-Type");
+class Api extends REST_Controller{
     
        
-    public function __construct() {
+    function __construct() {
         parent::__construct();
         $this->load->model('ApiModel');
     }
 
-    // public function dialogs_get(){
-    //     echo "Test"; 
-    // }
-
-    function alunos_get(){ //alunos_get (lista toods alunos)
-        $this->load->model('ApiModel');
-        $alunos = $this->ApiModel->get_alunos();
-        // var_dump($alunos);
-        if ($alunos) {
-            $this->response($alunos, 200);
-        } else {
-            $this->response(NULL, 404);
+    
+    public function alunos_get($id = 0)
+	{
+        if(!empty($id)){
+            $data = $this->db->get_where("aluno", ['id' => $id])->row_array();
+        }else{
+            $data = $this->ApiModel->read();
         }
-   }
-
-    public function aluno_get(){ // lista aluno por id
-        $this->load->model('ApiModel');
-        if (!$this->get('id')) {
-            $this->response(NULL, 400);
-        }
-
-        $aluno = $this->ApiModel->get_aluno($this->get('id'));
-
-        if ($aluno) {
-            $this->response($aluno, 200); // 200 being the HTTP response code
-        } else {
-            $this->response(NULL, 404);
-        }
-
+     
+        $this->response($data, REST_Controller::HTTP_OK);
     }
 
-     function index_post() {
-        $this->load->model('ApiModel');
-        $result = $this->ApiModel->update( $this->post('id'), array(
-            'nome' => $this->post('name'),
-            'endereco' => $this->post('email'),
+     function alunos_post(){
+        $data = array(
+            'nome' => $this->post('nome'),
+            'endereco' => $this->post('endereco'),
             'numero' => $this->post('numero'),
             'bairro' => $this->post('bairro'),
             'cidade' => $this->post('cidade'),
             'uf' => $this->post('uf'),
             'foto' => $this->post('foto')
-        ));
-             
-        if($result === FALSE)
-        {
-            $this->response(array('status' => 'failed'));
-        }
-             
-        else
-        {
-            $this->response(array('status' => 'success'));
-        }
-             
+        );
+        $r = $this->ApiModel->insert($data);
+        $this->response($r); 
     }
 
+    public function alunos_put(){
+        $id = $this->uri->segment(3);
+
+        $data = array(
+            'nome' => $this->put('nome'),
+            'endereco' => $this->put('endereco'),
+            'numero' => $this->put('numero'),
+            'bairro' => $this->put('bairro'),
+            'cidade' => $this->put('cidade'),
+            'uf' => $this->put('uf'),
+            'foto' => $this->put('foto')
+        );
+         $r = $this->ApiModel->update($id,$data);
+         $this->response($r); 
+    }
+    public function alunos_delete(){
+        $id = $this->uri->segment(3);
+        $r = $this->ApiModel->delete($id);
+        $this->response($r); 
+    }
+  
+
+      
 }
 
 ?>
